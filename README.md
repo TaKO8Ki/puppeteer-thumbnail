@@ -102,8 +102,6 @@ curl -X POST -H "Content-Type: application/json" -d '{"html": [the above code]}'
 
 </details>
 
----
-
 You can view your image the following URL (Data URI scheme).
 
 
