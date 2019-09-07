@@ -7,7 +7,7 @@ http.createServer(async function (req, res) {
   const { headers, method, url } = req;
   console.log(`${req.method} http://${process.env.DOMAIN}:${process.env.PORT}${req.url}`)
   
-  if (method == 'POST') {
+  if (method == 'POST' && req.url == '/image') {
     var body = '';
     req.on('error', (err) => {
       console.error(err); 
