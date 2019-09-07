@@ -1,0 +1,11 @@
+version: '3'
+services:
+  web:
+    build: .
+    working_dir: /app/app
+    command: bash -c "npm install && npm start"
+    volumes:
+      - .:/app
+    ports:
+      - "3000:3000"
+      

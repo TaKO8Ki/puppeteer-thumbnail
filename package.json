@@ -1,0 +1,25 @@
+{
+  "name": "puppeteer-thumbnail",
+  "version": "1.0.0",
+  "description": "puppeteer-thumbnail is the tool for converting HTML to image.",
+  "main": "thumbnail.js",
+  "scripts": {
+    "start": "node app/thumbnail.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TaKO8Ki/puppeteer-thumbnail.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/TaKO8Ki/puppeteer-thumbnail/issues"
+  },
+  "homepage": "https://github.com/TaKO8Ki/puppeteer-thumbnail#readme",
+  "dependencies": {
+    "chromium": "^2.1.1",
+    "dotenv": "^8.1.0",
+    "puppeteer": "^1.19.0"
+  }
+}
