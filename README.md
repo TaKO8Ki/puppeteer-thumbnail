@@ -41,11 +41,6 @@ convert HTML inside "div#image" to image
 
 ## Example
 
-<details>
-<summary>click and see the example</summary>
-<br>
-  
-
 ```bash
 html='
 <html>
@@ -105,7 +100,6 @@ created image:
 
 ![example](https://user-images.githubusercontent.com/41065217/64472594-c5317680-d19b-11e9-8548-6ba434807a6f.png)
 
-</details>
 
 You can view your image the following URL (Data URI scheme).
 
