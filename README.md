@@ -3,9 +3,9 @@
 ## Getting Started
 
 ```bash  
-docker-compose build 
-docker-compose up 
-docker-compose down 
+make build 
+make up 
+make down 
 ```
 
 ## Usage
