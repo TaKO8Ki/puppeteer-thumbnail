@@ -43,6 +43,6 @@ convert HTML to image
 You can view your image the following URL (Data URI scheme).
 
 
-```bash
+```
 data:image/png;base64,[image encoded to base64]
 ```
