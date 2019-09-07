@@ -39,7 +39,8 @@ convert HTML to image
     {"response": "NG", "image": [image created from HTML and encoded to base64]}
     ```
 
-- You can view your image the following URL (Data URI scheme).
+
+You can view your image the following URL (Data URI scheme).
 
 
 ```bash
