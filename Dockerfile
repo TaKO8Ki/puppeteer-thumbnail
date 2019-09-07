@@ -22,5 +22,3 @@ USER pptruser
 RUN npm install
 
 CMD ["google-chrome-unstable"]
-
-RUN npm start
