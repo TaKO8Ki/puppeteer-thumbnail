@@ -43,7 +43,7 @@ convert HTML inside "div#image" to image
 
 <details>
 <summary>click and see the example</summary>
-
+<br>
 
 ```bash
 html='
