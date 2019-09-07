@@ -1,1 +1,1 @@
-web: npm install; node app.js
+web: docer-compose build; docker-compse up
