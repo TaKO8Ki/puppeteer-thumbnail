@@ -30,7 +30,7 @@ convert HTML inside "div#image" to image
   - Body
 
     ```bash
-    {"response": "OK", "image": [image created form HTML and encoded to base64]}
+    {"response": "OK", "image": [image created from HTML and encoded to base64]}
     ```
 
     or
