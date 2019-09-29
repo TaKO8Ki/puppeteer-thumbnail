@@ -3,9 +3,9 @@
 ## Getting Started
 
 ```bash  
-make build 
-make up 
-make down 
+$ make build 
+$ make up 
+$ make down 
 ```
 
 ## Usage
