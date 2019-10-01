@@ -1,1 +1,0 @@
-web: docer-compose build; docker-compse up
