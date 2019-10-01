@@ -1,0 +1,18 @@
+version: '3'
+services:
+  web:
+    build: .
+    container_name: "puppeteer-thumbnail"
+    environment:
+      VIRTUAL_HOST: wooooo.cf
+    working_dir: /app/app
+    command: npm start
+    volumes:
+      - .:/app
+    ports:
+      - $PORT
+
+networks:
+  default:
+    external:
+      name: shared

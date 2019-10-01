@@ -3,7 +3,7 @@ services:
   web:
     build: .
     working_dir: /app/app
-    command: bash -c "npm install && npm start"
+    command: npm start
     volumes:
       - .:/app
     ports:
