@@ -5,6 +5,7 @@ services:
     container_name: "puppeteer-thumbnail"
     environment:
       VIRTUAL_HOST: wooooo.cf
+      - PORT
     working_dir: /app/app
     command: npm start
     volumes:
