@@ -9,7 +9,7 @@ process.on('uncaughtException', function(err) {
 //エンコードされたhtmlを受け取り、それを画像に変換してbase64で返すAPIサーバー
 var server = http.createServer(async function (req, res) {
   const { headers, method, url } = req;
-  console.log(`${req.method} http://${process.env.DOMAIN}:${process.env.PORT}${req.url}`)
+  console.log(`${req.method} ${req.url}`)
   
   if (method === 'POST' && req.url === '/image') {
     var body = '';
@@ -27,12 +27,12 @@ var server = http.createServer(async function (req, res) {
 
       if (html === undefined) {
         res.statusCode = 400;
-        res.end(`{"response": "NG", "message": "You need the key, "html" in JSON."}`);        
+        res.end(`{"response": "NG", "message": "you need the key, "html" in JSON."}`);        
       }
 
       if (!helper.hasIDImage(html)) {
         res.statusCode = 400;
-        res.end(`{"response": "NG", "message": "You have to include #image in HTML."}`);        
+        res.end(`{"response": "NG", "message": "you have to include #image in HTML."}`);        
       }
 
       if (html != undefined) {
@@ -45,10 +45,10 @@ var server = http.createServer(async function (req, res) {
     });
   } else if (method !== 'POST') {
     res.statusCode = 400;
-    res.end(`{"response": "NG", "message": "Method is not allowed."}`); 
+    res.end(`{"response": "NG", "message": "method is not allowed."}`); 
   } else {
     res.statusCode = 404;
-    res.end(`{"response": "NG", "message": "Page doesn't exist."}`);     
+    res.end(`{"response": "NG", "message": "page doesn't exist."}`);     
   }
 }).listen(process.env.PORT)
 
