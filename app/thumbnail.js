@@ -43,12 +43,12 @@ var server = http.createServer(async function (req, res) {
         res.end(`{"response": "NG", "message": "HTML doesn't exist."}`);
       } 
     });
+  } else if (req.url !== '/image') {
+    res.statusCode = 404;
+    res.end(`{"response": "NG", "message": "page doesn't exist."}`);     
   } else if (method !== 'POST') {
     res.statusCode = 400;
     res.end(`{"response": "NG", "message": "method is not allowed."}`); 
-  } else {
-    res.statusCode = 404;
-    res.end(`{"response": "NG", "message": "page doesn't exist."}`);     
   }
 }).listen(process.env.PORT)
 
