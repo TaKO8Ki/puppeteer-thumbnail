@@ -13,7 +13,7 @@ services:
     volumes:
       - .:/app
     ports:
-      - $PORT
+      - $PORT:$PORT
 
 networks:
   default:
