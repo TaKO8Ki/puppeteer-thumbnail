@@ -2,20 +2,29 @@ version: '3'
 services:
   web:
     image: takoyaki0316/puppeteer
-    container_name: "puppeteer-thumbnail"
+    build: .
     environment:
-      - VIRTUAL_HOST=wooooo.cf
       - PORT
-    deploy:
-      replicas: 2  
     working_dir: /app
     command: npm start
     volumes:
       - .:/app
     ports:
-      - $PORT:$PORT
-
+      - $PORT
+    networks:
+      - traefik-public
+    deploy:
+      replicas: 2
+      labels:
+        - traefik.frontend.rule=Host:${DOMAIN?Variable DOMAIN not set}
+        - traefik.port=${PORT}
+        - traefik.backend=puppeteer
+        - traefik.docker.network=traefik-public
+        - traefik.tags=traefik-public
+        - traefik.enable=true
+        - traefik.redirectorservice.frontend.entryPoints=http
+        - traefik.redirectorservice.frontend.redirect.entryPoint=https
+        - traefik.webservice.frontend.entryPoints=https
 networks:
-  default:
-    external:
-      name: shared
+  traefik-public:
+    external: true
