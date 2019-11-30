@@ -7,8 +7,6 @@ services:
       - PORT
     working_dir: /app
     command: npm start
-    volumes:
-      - .:/app
     ports:
       - $PORT
     networks:
@@ -16,9 +14,9 @@ services:
     deploy:
       replicas: ${REPLICAS}
       labels:
-        - traefik.frontend.rule=Host:${DOMAIN?Variable DOMAIN not set}
+        - traefik.frontend.rule=Host:developers.${DOMAIN?Variable DOMAIN not set};Path:/ogpup
         - traefik.port=${PORT}
-        - traefik.backend=puppeteer
+        - traefik.backend=ogpup
         - traefik.docker.network=traefik-public
         - traefik.tags=traefik-public
         - traefik.enable=true
