@@ -1,0 +1,117 @@
+name: CD
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [8.x]
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Use node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+    - name: Yarn install, build
+      run: |
+        yarn install --frozen-lockfile
+        yarn build
+    - name: Upload build files
+      uses: actions/upload-artifact@v1
+      with:
+        name: build
+        path: build/
+    - name: Upload scripts
+      uses: actions/upload-artifact@v1
+      with:
+        name: scripts
+        path: bin/
+    - name: Upload Dockerfile
+      uses: actions/upload-artifact@v1
+      with:
+        name: scripts
+        path: Dockerfile
+    - name: Upload docker-compose.yml
+      uses: actions/upload-artifact@v1
+      with:
+        name: scripts
+        path: docker-compose.yml
+
+  deploy:
+    name: Deploy
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Download build files
+      uses: actions/download-artifact@v1
+      with:
+        name: build
+    - name: Download scripts
+      uses: actions/download-artifact@v1
+      with:
+        name: scripts
+    - name: Docker login
+      uses: azure/docker-login@v1
+      with:
+        username: ${{ secrets.REGISTRY_USERNAME }}
+        password: ${{ secrets.REGISTRY_PASSWORD }}
+    - name: Docker build, push image
+      run: |
+        # オープンソースなのでDocker Hubで済ませる
+        bash ./scripts/deploy.sh
+    - name: Send docker-compose.yml
+      uses: appleboy/scp-action@master
+      env:
+        HOST: ${{ secrets.KNOWN_HOSTS }}
+        USERNAME: TaKO8Ki
+        KEY: ${{ secrets.SSH_KEY }}
+      with:
+        source: scripts/docker-compose.yml
+        target: services/react-portfolio
+    - name: Create GitHub deployment
+      uses: chrnorm/deployment-action@releases/v1
+      id: deployment
+      with:
+        token: "${{ github.token }}"
+        target-url: https://tako8ki.me
+        environment: production
+    - name: Deploy to server
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.KNOWN_HOSTS }}
+        username: TaKO8Ki
+        key: ${{ secrets.SSH_KEY }}
+        script_stop: true
+        script: |
+          cd services/react-portfolio
+          export REPLICAS=2
+          export DOMAIN=tako8ki.me
+          export PORT=5000
+          docker rmi `docker images takoyaki0316/react-portfolio --filter "dangling=true" -q` -f
+          docker pull takoyaki0316/react-portfolio:latest
+          docker stack deploy -c ./scripts/docker-compose.yml portfolio
+    - name: Update deployment status(success)
+      if: success()
+      uses: chrnorm/deployment-status@releases/v1
+      with:
+        token: "${{ github.token }}"
+        target-url: https://tako8ki.me
+        state: "success"
+        deployment_id: ${{ steps.deployment.outputs.deployment_id }}
+    - name: Update deployment status(failure)
+      if: failure()
+      uses: chrnorm/deployment-status@releases/v1
+      with:
+        token: "${{ github.token }}"
+        target-url: https://tako8ki.me
+        state: "failure"
+        deployment_id: ${{ steps.deployment.outputs.deployment_id }}
